@@ -34,7 +34,20 @@ jobs:
         run: |
           docker push mintah/fastapi-hng:latest
 
-      - name: Deploy Application
-        run: |
-          echo "Deploying the FastAPI application..."
-          # Add deployment commands here (e.g., SSH into the server, restart services)
+      # Step 6: SSH into EC2 and run Docker-related tasks
+      - name: SSH to EC2 and deploy the application
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.REMOTE_HOST }}  # EC2 IP or DNS name (added as GitHub secret)
+          username: ${{ secrets.REMOTE_USER }}  # SSH username (e.g., ec2-user, ubuntu)
+          key: ${{ secrets.REMOTE_SSH_KEY }}  # SSH private key (added as GitHub secret)
+          port: 22  # SSH port (default is 22)
+          script: |
+            # Run commands on the EC2 instance
+            echo "Running on EC2 server"
+            cd my_hng_app  # Navigate to your app directory
+            docker pull mintah/fastapi-hng:latest  # Pull the latest Docker image from Docker Hub
+            docker stop myapp-container || true  # Stop any existing container (ignore if not running)
+            docker rm myapp-container || true  # Remove the old container (ignore if not running)
+            docker run -d --name myapp-container mintah/fastapi-hng:latest  # Start the new container
+            sudo systemctl restart nginx
