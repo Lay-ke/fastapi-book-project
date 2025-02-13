@@ -45,8 +45,18 @@ jobs:
           script: |
             # Run commands on the EC2 instance
             echo "Running on EC2 server"
-            cd my_hng_app  # Navigate to your app directory
-            docker pull mintah/fastapi-hng:latest  # Pull the latest Docker image from Docker Hub
-            docker stop myapp-container || true  # Stop any existing container (ignore if not running)
-            docker rm myapp-container || true  # Remove the old container (ignore if not running)
-            docker run -d --name myapp-container mintah/fastapi-hng:latest  # Start the new container
+            cd my_hng_app  # Navigate to  app directory
+            # Download the docker-compose.yml file from the GitHub repository
+            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/docker-compose.yml  # Replace with actual URL to your docker-compose.yml
+            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/nginx.conf
+            # Stop and remove existing containers if any
+            echo "Stopping and removing old containers (if any)"
+            docker-compose down --volumes || echo "No existing containers to remove."
+
+            # Pull the latest images (if needed)
+            echo "Pulling latest images"
+            docker-compose pull  # This will pull any updated images from the registry
+
+            # Start the services with the new containers
+            echo "Starting containers with docker-compose"
+            docker-compose up -d  # Starts containers in detached mode
