@@ -48,7 +48,8 @@ jobs:
             cd my_hng_app  # Navigate to  app directory
             # Download the docker-compose.yml file from the GitHub repository
             curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/docker-compose.yml   # downloading docker compose file
-            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/nginx.conf      # downloading nginx configuration file
+            # downloading nginx configuration file
+            curl -o nginx.conf https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/nginx.conf      
             # Stop and remove existing containers if any
             echo "Stopping and removing old containers (if any)"
             docker-compose down --volumes || echo "No existing containers to remove."
