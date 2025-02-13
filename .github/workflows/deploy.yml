@@ -38,7 +38,7 @@ jobs:
       - name: SSH to EC2 and deploy the application
         uses: appleboy/ssh-action@v0.1.6
         with:
-          host: ${{ secrets.REMOTE_HOST }}  # EC2 IP or DNS name (added as GitHub secret)
+          host: ${{ secrets.REMOTE_HOST }}  # EC2 IP 
           username: ${{ secrets.REMOTE_USER }}  # SSH username (e.g., ec2-user, ubuntu)
           key: ${{ secrets.REMOTE_SSH_KEY }}  # SSH private key (added as GitHub secret)
           port: 22  # SSH port (default is 22)
