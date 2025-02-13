@@ -47,16 +47,14 @@ jobs:
             echo "Running on EC2 server"
             cd my_hng_app  # Navigate to  app directory
             # Download the docker-compose.yml file from the GitHub repository
-            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/docker-compose.yml  # Replace with actual URL to your docker-compose.yml
-            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/nginx.conf
+            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/docker-compose.yml   # downloading docker compose file
+            curl -o docker-compose.yml https://raw.githubusercontent.com/lay-ke/fastapi-book-project/main/nginx.conf      # downloading nginx configuration file
             # Stop and remove existing containers if any
             echo "Stopping and removing old containers (if any)"
             docker-compose down --volumes || echo "No existing containers to remove."
-
             # Pull the latest images (if needed)
             echo "Pulling latest images"
             docker-compose pull  # This will pull any updated images from the registry
-
             # Start the services with the new containers
             echo "Starting containers with docker-compose"
             docker-compose up -d  # Starts containers in detached mode
