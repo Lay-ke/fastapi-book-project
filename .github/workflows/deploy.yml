@@ -50,5 +50,3 @@ jobs:
             docker stop myapp-container || true  # Stop any existing container (ignore if not running)
             docker rm myapp-container || true  # Remove the old container (ignore if not running)
             docker run -d --name myapp-container mintah/fastapi-hng:latest  # Start the new container
-            sudo systemctl restart nginx
-            sudo systemctl daemon-reload
